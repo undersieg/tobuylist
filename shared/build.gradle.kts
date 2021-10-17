@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("kotlinx-serialization")
+    id("com.google.gms.google-services")
     id("com.android.library")
 }
 
@@ -33,6 +34,14 @@ kotlin {
             dependencies {
                 implementation(Kotlinx.datetime)
                 implementation(Kotlinx.serializationJson)
+                implementation(AndroidX.ktxCore)
+//                implementation(AndroidX.ktxCollections)
+//                implementation(AndroidX.ktxReactive)
+//                implementation(AndroidX.ktxRoom)
+                implementation(project.dependencies.platform(Firebase.bom))
+                implementation(Firebase.realtimeDatabase)
+                implementation(Firebase.authentication)
+
             }
         }
         val commonTest by getting {
@@ -44,6 +53,7 @@ kotlin {
         val androidMain by getting{
             dependencies{
                 implementation(Kotlinx.coroutinesAndroid)
+                implementation(Jake.timber)
             }
         }
         val androidTest by getting {
@@ -61,10 +71,10 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(Versions.compileSdkVersion)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(23)
-        targetSdkVersion(30)
+        minSdkVersion(Versions.minSdkVersion)
+        targetSdkVersion(Versions.targetSdkVersion)
     }
 }
